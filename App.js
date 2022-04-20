@@ -14,6 +14,7 @@ import { ThemeProvider } from 'styled-components/native'
 import { theme } from './src/infrastructure/theme'
 import { Text, TouchableOpacity, View } from 'react-native'
 import { SafeArea } from './src/components/utils/safe-area.component'
+import { RestaurantContextProvider } from './src/services/restaurants/mock/restaurants.context'
 
 export default function App() {
   const [oswaldLoaded] = useOswald({
@@ -65,13 +66,15 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <NavigationContainer>
-          <Tab.Navigator screenOptions={screenOptions}>
-            <Tab.Screen name="Restaurants" component={RestaurantsScreen} />
-            <Tab.Screen name="Settings" component={Settings} />
-            <Tab.Screen name="Map" component={Map} />
-          </Tab.Navigator>
-        </NavigationContainer>
+        <RestaurantContextProvider>
+          <NavigationContainer>
+            <Tab.Navigator screenOptions={screenOptions}>
+              <Tab.Screen name="Restaurants" component={RestaurantsScreen} />
+              <Tab.Screen name="Settings" component={Settings} />
+              <Tab.Screen name="Map" component={Map} />
+            </Tab.Navigator>
+          </NavigationContainer>
+        </RestaurantContextProvider>
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>

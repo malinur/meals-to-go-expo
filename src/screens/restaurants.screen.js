@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {
   FlatList,
   SafeAreaView,
@@ -12,6 +12,7 @@ import styled from 'styled-components/native'
 import RestaurantInfo from '../features/restaurants/restaurant-info.component'
 import { Spacer } from '../components/spacer/spacer.component'
 import { SafeArea } from '../components/utils/safe-area.component'
+import { RestaurantsContext } from '../services/restaurants/mock/restaurants.context'
 
 const SearchContainer = styled(View)`
   padding: ${(props) => props.theme.space[3]};
@@ -26,6 +27,8 @@ const RestaurantsScreen = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const onChangeSearch = (query) => setSearchQuery(query)
 
+  const { restaurants, isLoading, error } = useContext(RestaurantsContext)
+
   return (
     <SafeArea>
       <SearchContainer>
@@ -36,21 +39,15 @@ const RestaurantsScreen = () => {
         />
       </SearchContainer>
       <RestaurantList
-        data={[
-          { name: 1 },
-          { name: 2 },
-          { name: 3 },
-          { name: 4 },
-          { name: 5 },
-          { name: 6 },
-        ]}
-        renderItem={() => (
-          <>
+        data={restaurants}
+        renderItem={({ item }) => {
+          console.log(item)
+          return (
             <Spacer position="bottom" size="large">
-              <RestaurantInfo />
+              <RestaurantInfo restaurant={item} />
             </Spacer>
-          </>
-        )}
+          )
+        }}
         keyExtractor={(item) => item.name}
         contentContainerStyle={{ padding: 16 }}
       />
