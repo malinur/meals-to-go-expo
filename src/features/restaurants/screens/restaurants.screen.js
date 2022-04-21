@@ -7,41 +7,43 @@ import {
   Text,
   View,
 } from 'react-native'
-import { Searchbar } from 'react-native-paper'
+import { ActivityIndicator, Colors, Searchbar } from 'react-native-paper'
 import styled from 'styled-components/native'
-import RestaurantInfo from '../features/restaurants/restaurant-info.component'
-import { Spacer } from '../components/spacer/spacer.component'
-import { SafeArea } from '../components/utils/safe-area.component'
-import { RestaurantsContext } from '../services/restaurants/mock/restaurants.context'
+import RestaurantInfo from '../components/restaurant-info.component'
+import { Spacer } from '../../../components/spacer/spacer.component'
+import { SafeArea } from '../../../components/utils/safe-area.component'
+import { RestaurantsContext } from '../../../services/restaurants/mock/restaurants.context'
+import Search from '../components/search.component'
 
-const SearchContainer = styled(View)`
-  padding: ${(props) => props.theme.space[3]};
-`
 const RestaurantList = styled(FlatList).attrs({
   contentContainerStyle: {
     padding: 16,
   },
 })``
 
-const RestaurantsScreen = () => {
-  const [searchQuery, setSearchQuery] = useState('')
-  const onChangeSearch = (query) => setSearchQuery(query)
+const Loading = styled(ActivityIndicator)`
+  margin-left: -25px;
+`
+const LoadingContainer = styled.View`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+`
 
+const RestaurantsScreen = () => {
   const { restaurants, isLoading, error } = useContext(RestaurantsContext)
 
   return (
     <SafeArea>
-      <SearchContainer>
-        <Searchbar
-          placeholder="Search"
-          onChangeText={onChangeSearch}
-          value={searchQuery}
-        />
-      </SearchContainer>
+      {isLoading && (
+        <LoadingContainer>
+          <Loading size={50} animating={true} color={Colors.blue300} />
+        </LoadingContainer>
+      )}
+      <Search />
       <RestaurantList
         data={restaurants}
         renderItem={({ item }) => {
-          console.log(item)
           return (
             <Spacer position="bottom" size="large">
               <RestaurantInfo restaurant={item} />
