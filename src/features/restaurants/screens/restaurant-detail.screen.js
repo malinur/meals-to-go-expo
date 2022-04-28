@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { SafeArea } from '../../../components/utils/safe-area.component'
-import RestaurantInfo from '../components/restaurant-info.component'
 import { List } from 'react-native-paper'
 import { ScrollView } from 'react-native'
+import { SafeArea } from '../../../components/utils/safe-area.component'
+import RestaurantInfo from '../components/restaurant-info.component'
 
 export default function RestaurantDetailScreen({ route }) {
   const [breakfastExpanded, setBreakfastExpanded] = useState(false)

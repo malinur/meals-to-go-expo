@@ -1,14 +1,15 @@
 import React, { useContext, useState } from 'react'
-import { FlatList, Pressable, TouchableOpacity } from 'react-native'
+import { FlatList, TouchableOpacity } from 'react-native'
 import { ActivityIndicator, Colors } from 'react-native-paper'
 import styled from 'styled-components/native'
+
 import RestaurantInfo from '../components/restaurant-info.component'
 import { Spacer } from '../../../components/spacer/spacer.component'
 import { SafeArea } from '../../../components/utils/safe-area.component'
-import { RestaurantsContext } from '../../../services/restaurants/mock/restaurants.context'
 import Search from '../components/search.component'
-import { FavoritesContext } from '../../../services/favorites/favorites.context'
 import FavoritesBar from '../../../components/favorites/favorites-bar.component'
+import { RestaurantsContext } from '../../../services/restaurants/restaurants.context'
+import { FavoritesContext } from '../../../services/favorites/favorites.context'
 
 const RestaurantList = styled(FlatList).attrs({
   contentContainerStyle: {
@@ -28,8 +29,8 @@ const LoadingContainer = styled.View`
 const RestaurantsScreen = ({ navigation }) => {
   const { restaurants, isLoading, error } = useContext(RestaurantsContext)
   const { favorites } = useContext(FavoritesContext)
-
   const [isToggled, setIsToggled] = useState(false)
+
   return (
     <SafeArea>
       {isLoading && (
@@ -60,7 +61,6 @@ const RestaurantsScreen = ({ navigation }) => {
           )
         }}
         keyExtractor={(item) => item.name}
-        contentContainerStyle={{ padding: 16 }}
       />
     </SafeArea>
   )

@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components/native'
 import { Platform } from 'react-native'
 import { WebView } from 'react-native-webview'
+
 import { Text } from '../typography/text.component'
 
 const CompactImage = styled.Image`
@@ -20,6 +21,7 @@ const Item = styled.View`
   align-items: center;
 `
 const isAndroid = Platform.OS === 'android'
+
 export default function CompactRestaurantInfo({ restaurant, isMap }) {
   const Image = isAndroid && isMap ? CompactWebView : CompactImage
   return (
